@@ -4,7 +4,13 @@ import cv2 as cv
 import numpy as np
 
 backSub = cv.createBackgroundSubtractorMOG2()
-blurredBackSub = cv.createBackgroundSubtractorMOG2()
+
+def readVideoCapture(path):
+    capture = cv.VideoCapture(cv.samples.findFileOrKeep(path))
+    if not capture.isOpened():
+        raise Exception("Couldn't open file")
+    return capture
+
 
 file = "multiball"
 # file = "half_hour"
