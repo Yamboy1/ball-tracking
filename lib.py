@@ -42,7 +42,7 @@ def runBackgroundSubtractor(frames, kernelSize):
         ret , threshold = cv.threshold(fgMask.copy(), 120, 255,cv.THRESH_BINARY)
         dilated = cv.dilate(threshold,cv.getStructuringElement(cv.MORPH_ELLIPSE, (3,3)),iterations = 2)
         contours, hierarchy = cv.findContours(dilated, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
-        contourFrame = frames[i].copy()
+        contourFrame = frames[i]
         cv.drawContours(contourFrame, contours, -1, (0,255,0), 3)
         maskFrame = cv.cvtColor(dilated, cv.COLOR_GRAY2RGB)
         image_pairs.append((blurFrame, maskFrame, contourFrame))
