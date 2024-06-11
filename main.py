@@ -1,22 +1,26 @@
 #!/usr/bin/env python3
 
 import cv2 as cv
-from lib import *
+from lib import runBackgroundSubtractor
+from util import *
 
 def main():
-    file = "multiball"
-    path = f'./data/{file}_cropped_610px.mkv'
-    num_frames = 1500
-    capture = readVideoCapture(path)
-    print(f"Read file {path}, it has fps of {capture.get(cv.CAP_PROP_FPS)}")
-    frames = readFrames(capture, num_frames)
-    print("1500 frames read :)")
-    print("Running background subtractor")
-    image_pairs = runBackgroundSubtractor(frames, 15)
-    del frames
-    output_filename = f"./artifacts/{file}-shadows-15.avi"
-    print(f"Writing output file: {output_filename}")
-    writeOutputVideo(output_filename, 60, image_pairs)
+    file = "half_hour"
+    path = f'./data/{file}_600px.mkv'
+    kernelSize = 15
+    numFrames = 1500
+    print(f"Reading {numFrames} frames from file {path}...")
+    frames = readFramesFromFile(path, numFrames)
+    print("Running background subtractor...")
+    outputFrames = []
+    for frame in frames:
+        outputFrames.append(runBackgroundSubtractor(frame, kernelSize))
+    outputFrames = np.array(outputFrames)
+    name = input("Give a name to this output: ")
+    outputFilename = f"./artifacts/{file}-{name}.avi"
+    print(f"Writing output file: {outputFilename}...")
+    print(f"Shape: {outputFrames.shape}")
+    writeOutputVideo(outputFilename, 60, outputFrames)
     print("Done :3")
 
 
