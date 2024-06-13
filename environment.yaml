@@ -6,3 +6,4 @@ dependencies:
   - python
   - opencv
   - jupyterlab
+  - matplotlib
