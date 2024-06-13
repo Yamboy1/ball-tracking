@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 
+import sys
 import cv2 as cv
 from lib import runBackgroundSubtractor
 from util import *
 
 def main():
-    file = "half_hour"
-    path = f'./data/{file}_600px.mkv'
+    if len(sys.argv) <= 1:
+        print("Please pass in an input file!")
+        exit(1)
+    file = sys.argv[1]
+    path = f'./data/{file}'
     kernelSize = 15
     numFrames = 1500
     print(f"Reading {numFrames} frames from file {path}...")
